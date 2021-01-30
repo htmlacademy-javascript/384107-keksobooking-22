@@ -27,7 +27,7 @@ const coordinates = (firstCoordinate, secondCoordinate, lengthCoorinates) => {
 
   else {
     if (firstCoordinate >= 0 && secondCoordinate >= 0) {
-      return (Math.random() * (secondCoordinate - firstCoordinate + 1) + secondCoordinate).toFixed(lengthCoorinates);
+      return (Math.random() * (secondCoordinate - firstCoordinate + 1) + firstCoordinate).toFixed(lengthCoorinates);
     }
 
     return 'Ошибка. Пожалуйста, введите число от 0 и больше';
