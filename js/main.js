@@ -3,10 +3,12 @@ const numbers = (min, max) => {
   if (min >= max) {
     return 'Ошибка. Пожалуйста, введите другое значение. Минимальное число должно быть меньше максимального';
   }
+
   else {
     if (min >= 0 && max >= 0) {
       return Math.trunc(Math.random() * max + 1);
     }
+
     return'Ошибка. Пожалуйста, введите число от 0 и больше';
   }
 }
@@ -23,7 +25,6 @@ const coordinates = (firstCoordinate, secondCoordinate, lengthCoorinates) => {
   }
 
   else {
-
     if (firstCoordinate >= 0 && secondCoordinate >= 0) {
       return (Math.random() * secondCoordinate + 1).toFixed(lengthCoorinates);
     }
