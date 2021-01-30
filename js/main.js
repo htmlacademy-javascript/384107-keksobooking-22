@@ -6,12 +6,13 @@ const numbers = (min, max) => {
 
   else {
     if (min >= 0 && max >= 0) {
-      return Math.trunc(Math.random() * max + 1);
+      return Math.trunc(Math.random() * (max - min + 1) + min);
     }
 
     return'Ошибка. Пожалуйста, введите число от 0 и больше';
   }
 }
+
 numbers(2, 8);
 
 
@@ -26,11 +27,11 @@ const coordinates = (firstCoordinate, secondCoordinate, lengthCoorinates) => {
 
   else {
     if (firstCoordinate >= 0 && secondCoordinate >= 0) {
-      return (Math.random() * secondCoordinate + 1).toFixed(lengthCoorinates);
+      return (Math.random() * (secondCoordinate - firstCoordinate + 1) + secondCoordinate).toFixed(lengthCoorinates);
     }
 
     return 'Ошибка. Пожалуйста, введите число от 0 и больше';
   }
 }
 
-coordinates(0.8, 63, 3);
+coordinates(0.8, 63, 2);
