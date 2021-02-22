@@ -2,15 +2,50 @@ import {
   getRandomNumber,
   getRandomFloatNumber,
   chooseRandomElement,
-  createRandomArray,
-  mixArray
+  mixArray,
+  getRamdomObjectValue
 } from './util.js';
 
+const TYPE_OF_BUILDING = {
+  palace: 'Дворец',
+  flat: 'Квартира',
+  house: 'Дом',
+  bungalow: 'Бунгало',
+}
 
-const TYPE_OF_BUILDING = ['palace', 'flat', 'house', 'bungalow'];
-const TIME = ['12:00', '13:00', '14:00'];
-const FEATURES_TYPE = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-const PHOTOD_LINKS_ARRAY = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
+const TIME = [
+  '12:00',
+  '13:00',
+  '14:00',
+];
+
+const FEATURES_TYPE = [
+  'wifi',
+  'dishwasher',
+  'parking',
+  'washer',
+  'elevator',
+  'conditioner',
+];
+
+const PHOTOD_LINKS_ARRAY = [
+  'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+  'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
+];
+
+const TITLE = [
+  'Лучшее жилье только у нас!',
+  'Уютное гнездышко для молодежи',
+  'Окунитесь в мир Японии',
+];
+
+const DESCRIPTION = [
+  'Удобное и просторное жилье для гостей из разных стран',
+  'С панорамными окнами и видом на Токийские сады',
+  'Отличный вариант для тех, кто путешествует с котом',
+];
+
 const MIN_VALUE_IN_AVATAR = 1;
 const MAX_VALUE_IN_AVATAR = 8;
 const MIN_COORDINATE_X = 35.65000;
@@ -22,7 +57,7 @@ const MAX_ROOM = 8;
 const MIN_GUESTS = 1;
 const MAX_GUESTS = 12;
 const MIN_PRICE = 1000;
-const MAX_PRICE = 10000;
+const MAX_PRICE = 1000000;
 const LENGTH_AFTER_POINT = 5;
 const QUANTITY_ADVERTISMENT = 10;
 
@@ -41,17 +76,17 @@ const createAdvertismentObject = () => {
     },
 
     offer: {
-      title: 'Лучшее жилье только у нас!',
+      title: chooseRandomElement(TITLE),
       address: locationX + ',' + locationY,
       price: getRandomNumber(MIN_PRICE, MAX_PRICE),
-      type: chooseRandomElement(TYPE_OF_BUILDING),
+      type: getRamdomObjectValue(TYPE_OF_BUILDING),
       rooms: getRandomNumber(MIN_ROOM, MAX_ROOM),
       guests: getRandomNumber(MIN_GUESTS, MAX_GUESTS),
-      checking: chooseRandomElement(TIME),
+      checkin: chooseRandomElement(TIME),
       checkout: chooseRandomElement(TIME),
       features: mixArray(FEATURES_TYPE).slice(0, getRandomNumber(1, FEATURES_TYPE.length)),
-      description: 'Удобное и просторное жилье для гостей из разных стран',
-      photos: createRandomArray(PHOTOD_LINKS_ARRAY),
+      description: chooseRandomElement(DESCRIPTION),
+      photos: mixArray(PHOTOD_LINKS_ARRAY).slice(0, getRandomNumber(1, PHOTOD_LINKS_ARRAY.length)),
     },
 
     location: {
@@ -74,3 +109,7 @@ const createAdvertismentArray = () => {
 
 createAdvertismentArray();
 
+export {
+  QUANTITY_ADVERTISMENT,
+  createAdvertismentArray
+}

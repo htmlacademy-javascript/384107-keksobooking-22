@@ -48,11 +48,28 @@ const mixArray = (array) => {
   return array;
 }
 
+const getRamdomObjectValue = (object) => {
+  const arrayObjectKeys = Object.keys(object);
+  const randomKey = chooseRandomElement(arrayObjectKeys);
+  const keyValue = object[randomKey];
+  return keyValue
+}
+
+function numWord(value, words) {
+  value = Math.abs(value) % 100;
+  let num = value % 10;
+  if (value > 10 && value < 20) return words[2];
+  if (num > 1 && num < 5) return words[1];
+  if (num == 1) return words[0];
+  return words[2];
+}
+
 export {
   getRandomNumber,
   getRandomFloatNumber,
   chooseRandomElement,
   createRandomArray,
-  mixArray
+  mixArray,
+  getRamdomObjectValue,
+  numWord
 };
-
