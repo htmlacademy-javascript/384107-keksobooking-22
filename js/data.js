@@ -109,5 +109,6 @@ const createAdvertismentArray = () => {
 
 export {
   QUANTITY_ADVERTISMENT,
-  createAdvertismentArray
+  createAdvertismentArray,
+  LENGTH_AFTER_POINT
 }
