@@ -1,6 +1,4 @@
-import {
-  createAdvertismentArray
-} from './data.js';
-import './ads.js'
-
-createAdvertismentArray();
+import './data.js';
+import './ads.js';
+import './form.js';
+import './map.js';
