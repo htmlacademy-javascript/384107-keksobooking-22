@@ -1,15 +1,9 @@
 import {
-  QUANTITY_ADVERTISMENT,
-  createAdvertismentArray
-} from './data.js';
-
-import {
   numWord
 } from './util.js';
 
 const cardTemplate = document.querySelector('#card').content;
 const mapCanvas = document.querySelector('#map-canvas');
-
 
 const GUEST_VARIATION = [
   'гость',
@@ -72,7 +66,6 @@ const createAdPopup = (data) => {
 
     return photos
   };
-
 
   if (data.offer.title) {
     cardTitle.textContent = data.offer.title;

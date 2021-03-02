@@ -1,19 +1,4 @@
-import {
-  createAdvertismentArray,
-  QUANTITY_ADVERTISMENT
-} from './data.js';
-
-import {
-  mapCanvas,
-  createAdPopup
-} from'./ads.js'
-
+import './data.js';
+import './ads.js';
 import './form.js';
 import './map.js';
-
-const ads = createAdvertismentArray(QUANTITY_ADVERTISMENT);
-const adPopup = createAdPopup(ads[0]);
-// mapCanvas.appendChild(adPopup);
-
-
-
