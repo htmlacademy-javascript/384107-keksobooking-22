@@ -6,7 +6,6 @@ const getRandomNumber = (min, max) => {
   if (min >= max) {
     throw Error('Ошибка. Пожалуйста, введите другое значение. Минимальное число должно быть меньше максимального');
   }
-
   return Math.trunc(Math.random() * (max - min + 1) + min);
 }
 
@@ -18,7 +17,6 @@ const getRandomFloatNumber = (min, max, floatLength) => {
   if (min >= max) {
     throw Error('Ошибка. Пожалуйста, введите другое значение. Минимальное число должно быть меньше максимального');
   }
-
   return Number((Math.random() * (max - min) + min).toFixed(floatLength));
 }
 
@@ -34,7 +32,6 @@ const createRandomArray = (array) => {
     const getRandomArrayElement = array[getRandomNumber(0, array.length - 1)];
     newArray.push(getRandomArrayElement);
   }
-
   return newArray;
 }
 
@@ -55,7 +52,7 @@ const getRamdomObjectValue = (object) => {
   return keyValue
 }
 
-function numWord(value, words) {
+const numWord = (value, words) => {
   value = Math.abs(value) % 100;
   let num = value % 10;
   if (value > 10 && value < 20) return words[2];
