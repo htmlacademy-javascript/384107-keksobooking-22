@@ -1,20 +1,12 @@
 /* global L:readonly */
 import {
-  form,
-  filter,
-  filterInteractiveElements,
-  formInteractiveElements,
-  inputAddress
+  setAddressValue
 } from './form.js';
-
-import {
-  LENGTH_AFTER_POINT,
-  ads
-} from './data.js';
 
 import {
   createAdPopup
 } from './ads.js';
+
 
 const TOKIO_COORDINATES = {
   lat: 35.68950,
@@ -27,23 +19,7 @@ const TOKIO_COORDINATES_CENTER = {
   lng: 139.76526,
 }
 
-const map = L.map('map-canvas')
-  .on('load', () => {
-    form.classList.remove('ad-form--disabled');
-    filter.classList.remove('ad-form--disabled');
-
-    formInteractiveElements.forEach((element) => {
-      element.disabled = false;
-    });
-
-    filterInteractiveElements.forEach((element) => {
-      element.disabled = false;
-    });
-  })
-  .setView({
-    lat: TOKIO_COORDINATES.lat,
-    lng: TOKIO_COORDINATES.lng,
-  }, TOKIO_COORDINATES.scale);
+const map = L.map('map-canvas');
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -67,30 +43,35 @@ const mainMarker = L.marker({
 
 mainMarker.addTo(map);
 
-inputAddress.value = (TOKIO_COORDINATES_CENTER.lat).toFixed(LENGTH_AFTER_POINT) + ', ' + (TOKIO_COORDINATES_CENTER.lng).toFixed(LENGTH_AFTER_POINT);
+setAddressValue(TOKIO_COORDINATES_CENTER.lat, TOKIO_COORDINATES_CENTER.lng);
 
 mainMarker.on('moveend', (evt) => {
-  let coordinates = evt.target.getLatLng();
-  inputAddress.value = (coordinates.lat).toFixed(LENGTH_AFTER_POINT) + ', ' + (coordinates.lng).toFixed(LENGTH_AFTER_POINT);
+  const coordinates = evt.target.getLatLng();
+  setAddressValue(coordinates.lat, coordinates.lng)
 });
 
-ads.forEach((element) => {
+const createPopups = (ads) => {
   const icon = L.icon({
     iconUrl: 'img/pin.svg',
     iconSize: [50, 50],
     iconAnchor: [25, 25],
   })
-  const marker = L.marker({
-    lat: element.location.x,
-    lng: element.location.y,
-  }, {
-    icon,
-  })
-  marker
-    .addTo(map)
-    .bindPopup(createAdPopup(element));
-});
+
+  ads.forEach((element) => {
+    const marker = L.marker({
+      lat: element.location.x,
+      lng: element.location.y,
+    }, {
+      icon,
+    });
+    marker
+      .addTo(map)
+      .bindPopup(createAdPopup(element));
+  });
+}
 
 export {
-  map
+  map,
+  createPopups,
+  TOKIO_COORDINATES
 };

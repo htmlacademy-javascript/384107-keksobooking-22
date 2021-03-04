@@ -2,7 +2,7 @@ import {
   numWord
 } from './util.js';
 
-const cardTemplate = document.querySelector('#card').content;
+const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 const mapCanvas = document.querySelector('#map-canvas');
 
 const GUEST_VARIATION = [
