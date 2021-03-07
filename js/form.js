@@ -7,6 +7,9 @@ const MIN_PRICES = {
 };
 const MIN_TITLE_LENGTH = 30;
 const MAX_TITLE_LENGTH = 100;
+const MAX_ROOMS_COUNT = 100;
+const MAX_ROOMS_VALUE = 0;
+const MIN_ROOMS_VALUE = 1;
 
 const form = document.querySelector('.ad-form');
 const formElements = form.querySelectorAll('fieldset');
@@ -17,7 +20,8 @@ const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
 const formTitle = form.querySelector('#title');
 const roomNumber = form.querySelector('#room_number');
-const capacity = form.querySelector('#capacity');
+const capacitiy = form.querySelector('#capacity');
+const capacities = form.querySelectorAll('#capacity option');
 
 formTitle.addEventListener('input', () => {
   const titleLength = formTitle.value.length;
@@ -39,48 +43,58 @@ housingPrice.addEventListener('input', () => {
   }
 });
 
-roomNumber.addEventListener('change', () => {
-  if (roomNumber.value === '1') {
-    capacity.options[0].disabled = true;
-    capacity.options[1].disabled = true;
-    capacity.options[2].selected = true;
-    capacity.options[2].disabled = false;
-    capacity.options[3].disabled = true;
+const setRoomCapacity = () => {
+  const roomsCount = Number(roomNumber.value);
+  for (let i = 0; i < capacities.length; i++) {
+      capacities[i].disabled = false;
+    }
 
-  } else if (roomNumber.value === '2') {
-    capacity.options[0].disabled = true;
-    capacity.options[1].selected = true;
-    capacity.options[1].disabled = false;
-    capacity.options[2].disabled = false;
-    capacity.options[3].disabled = true;
-
-  } else if (roomNumber.value === '3') {
-    capacity.options[0].disabled = false;
-    capacity.options[0].selected = true;
-    capacity.options[1].disabled = false;
-    capacity.options[2].disabled = false;
-    capacity.options[3].disabled = true;
+  if (roomsCount === MAX_ROOMS_COUNT) {
+    for (let i = 0; i < capacities.length -1; i++) {
+      capacities[i].disabled = true;
+    }
+    capacity.value = MAX_ROOMS_VALUE;
   } else {
-    capacity.options[0].disabled = true;
-    capacity.options[1].disabled = true;
-    capacity.options[2].disabled = true;
-    capacity.options[3].selected = true;
-    capacity.options[3].disabled = false;
+    capacity.value = MIN_ROOMS_VALUE;
+    capacities[3].disabled = true;
+
+    for (let i = 0; i < capacities.length; i++) {
+      if (capacities[i].value > roomNumber.value) {
+        capacities[i].disabled = true;
+      }
+    }
   }
-});
+}
 
-timeIn.addEventListener('change', () => {
+const onRoomNumberChange = () => {
+  setRoomCapacity();
+}
+
+roomNumber.addEventListener('change', onRoomNumberChange);
+
+const onTimeInChange = () => {
   timeOut.value = timeIn.value;
-});
-timeOut.addEventListener('change', () => {
-  timeIn.value = timeOut.value;
-});
+}
 
-housingType.addEventListener('change', () => {
+const onTimeOutChange = () => {
+  timeIn.value = timeOut.value;
+}
+
+timeIn.addEventListener('change', onTimeInChange);
+
+timeOut.addEventListener('change', onTimeOutChange);
+
+const setMinPrices = () => {
   const minPrice = MIN_PRICES[housingType.value];
   housingPrice.setAttribute('min', minPrice);
   housingPrice.setAttribute('placeholder', minPrice);
-});
+}
+
+const onHousingTypeChange = () => {
+  setMinPrices();
+}
+
+housingType.addEventListener('change', onHousingTypeChange);
 
 const setAddressValue = (lat, lng) => {
   inputAddress.value = lat.toFixed(ADDRESS_FLOAT_LENGTH) + ', ' + lng.toFixed(ADDRESS_FLOAT_LENGTH);
@@ -102,6 +116,8 @@ const enableFormElements = (block, elements) => {
   });
 };
 
+setRoomCapacity();
+setMinPrices();
 disableFormElements(form, formElements);
 
 export {
