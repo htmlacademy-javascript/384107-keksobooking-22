@@ -59,8 +59,8 @@ const createPopups = (ads) => {
 
   ads.forEach((element) => {
     const marker = L.marker({
-      lat: element.location.x,
-      lng: element.location.y,
+      lat: element.location.lat,
+      lng: element.location.lng,
     }, {
       icon,
     });

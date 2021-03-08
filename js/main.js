@@ -18,6 +18,21 @@ import {
   filterElements
 } from './filter.js'
 
+
+
+fetch('https://22.javascript.pages.academy/keksobooking/data')
+  .then((response) => response.json())
+  .then((advertisments) => {
+    console.log(advertisments);
+    createPopups(advertisments);
+  });
+
+
+
+// const ads = createAdvertismentArray(QUANTITY_ADVERTISMENT);
+// createPopups(ads);
+
+
 map.
   on('load', () => {
     enableFormElements(form, formElements);
@@ -28,5 +43,4 @@ map.
     lng: TOKIO_COORDINATES.lng,
   }, TOKIO_COORDINATES.scale);
 
-const ads = createAdvertismentArray(QUANTITY_ADVERTISMENT);
-createPopups(ads);
+
