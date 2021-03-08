@@ -66,49 +66,6 @@ const getRandomAvatarValue = () => {
   return 'img/avatars/user' + randomAvatarValue + '.png';
 }
 
-const createAdvertismentObject = () => {
-  const locationX = getRandomFloatNumber(MIN_COORDINATE_X, MAX_COORDINATE_X, LENGTH_AFTER_POINT);
-  const locationY = getRandomFloatNumber(MIN_COORDINATE_Y, MAX_COORDINATE_Y, LENGTH_AFTER_POINT);
-
-  return {
-    author: {
-      avatar: getRandomAvatarValue(),
-    },
-
-    offer: {
-      title: chooseRandomElement(TITLE),
-      address: locationX + ',' + locationY,
-      price: getRandomNumber(MIN_PRICE, MAX_PRICE),
-      type: getRamdomObjectValue(TYPE_OF_BUILDING),
-      rooms: getRandomNumber(MIN_ROOM, MAX_ROOM),
-      guests: getRandomNumber(MIN_GUESTS, MAX_GUESTS),
-      checkin: chooseRandomElement(TIME),
-      checkout: chooseRandomElement(TIME),
-      features: mixArray(FEATURES_TYPE).slice(0, getRandomNumber(1, FEATURES_TYPE.length)),
-      description: chooseRandomElement(DESCRIPTION),
-      photos: mixArray(PHOTOD_LINKS_ARRAY).slice(0, getRandomNumber(1, PHOTOD_LINKS_ARRAY.length)),
-    },
-
-    location: {
-      x: locationX,
-      y: locationY,
-    },
-  }
-}
-
-const createAdvertismentArray = () => {
-  const advertismentArray = [];
-
-  for (let i = 0; i < QUANTITY_ADVERTISMENT; i++) {
-    const newAdvertismentObject = createAdvertismentObject();
-    advertismentArray.push(newAdvertismentObject);
-  }
-
-  return advertismentArray;
-}
-
 export {
-  QUANTITY_ADVERTISMENT,
-  createAdvertismentArray,
   LENGTH_AFTER_POINT
 }

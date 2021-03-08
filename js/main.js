@@ -1,6 +1,6 @@
 import {
-  createAdvertismentArray,
-  QUANTITY_ADVERTISMENT
+  // createAdvertismentArray,
+  // QUANTITY_ADVERTISMENT
 } from './data.js';
 import './ads.js';
 import {
@@ -26,6 +26,8 @@ fetch('https://22.javascript.pages.academy/keksobooking/data')
     console.log(advertisments);
     createPopups(advertisments);
   });
+
+
 
 
 

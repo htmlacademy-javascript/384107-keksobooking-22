@@ -1,3 +1,10 @@
+import {
+  mainMarker,
+  map,
+  TOKIO_COORDINATES_CENTER,
+  setCoordinateValue
+} from './map.js';
+
 const ADDRESS_FLOAT_LENGTH = 5;
 const MIN_PRICES = {
   bungalow: 0,
@@ -10,6 +17,7 @@ const MAX_TITLE_LENGTH = 100;
 const MAX_ROOMS_COUNT = 100;
 const MAX_ROOMS_VALUE = 0;
 const MIN_ROOMS_VALUE = 1;
+const NOT_FOR_GUESTS_CAPACITY = 3;
 
 const form = document.querySelector('.ad-form');
 const formElements = form.querySelectorAll('fieldset');
@@ -22,6 +30,7 @@ const formTitle = form.querySelector('#title');
 const roomNumber = form.querySelector('#room_number');
 const capacitiy = form.querySelector('#capacity');
 const capacities = form.querySelectorAll('#capacity option');
+const buttonReset = form.querySelector('.ad-form__reset');
 
 formTitle.addEventListener('input', () => {
   const titleLength = formTitle.value.length;
@@ -56,7 +65,7 @@ const setRoomCapacity = () => {
     capacity.value = MAX_ROOMS_VALUE;
   } else {
     capacity.value = MIN_ROOMS_VALUE;
-    capacities[3].disabled = true;
+    capacities[NOT_FOR_GUESTS_CAPACITY].disabled = true;
 
     for (let i = 0; i < capacities.length; i++) {
       if (capacities[i].value > roomNumber.value) {
@@ -116,9 +125,44 @@ const enableFormElements = (block, elements) => {
   });
 };
 
+const formReset = () => {
+  form.reset();
+  setMinPrices();
+  map.panTo(new L.LatLng(TOKIO_COORDINATES_CENTER.lat, TOKIO_COORDINATES_CENTER.lng));
+  mainMarker.setLatLng(L.latLng(TOKIO_COORDINATES_CENTER.lat, TOKIO_COORDINATES_CENTER.lng));
+  setAddressValue(TOKIO_COORDINATES_CENTER.lat, TOKIO_COORDINATES_CENTER.lng);
+}
+
+form.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const formData = new FormData(evt.target);
+
+  fetch (
+    'https://22.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body: formData,
+    },
+  );
+  formReset();
+});
+
+const formSubmit = (onSuccess) => {
+
+}
+
+
+buttonReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  formReset();
+})
+
 setRoomCapacity();
 setMinPrices();
 disableFormElements(form, formElements);
+
+
+
 
 export {
   form,
