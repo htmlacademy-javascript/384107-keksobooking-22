@@ -1,9 +1,18 @@
+/* global L:readonly */
+
 import {
   mainMarker,
   map,
-  TOKIO_COORDINATES_CENTER,
-  setCoordinateValue
+  TOKIO_COORDINATES_CENTER
 } from './map.js';
+
+import {
+  showPopup,
+  successPopup,
+  errorPopup
+} from './popup.js'
+
+
 
 const ADDRESS_FLOAT_LENGTH = 5;
 const MIN_PRICES = {
@@ -28,9 +37,10 @@ const timeIn = form.querySelector('#timein');
 const timeOut = form.querySelector('#timeout');
 const formTitle = form.querySelector('#title');
 const roomNumber = form.querySelector('#room_number');
-const capacitiy = form.querySelector('#capacity');
+const capacity = form.querySelector('#capacity');
 const capacities = form.querySelectorAll('#capacity option');
 const buttonReset = form.querySelector('.ad-form__reset');
+const buttonSubmit = form.querySelector('.ad-form__submit');
 
 formTitle.addEventListener('input', () => {
   const titleLength = formTitle.value.length;
@@ -55,8 +65,8 @@ housingPrice.addEventListener('input', () => {
 const setRoomCapacity = () => {
   const roomsCount = Number(roomNumber.value);
   for (let i = 0; i < capacities.length; i++) {
-      capacities[i].disabled = false;
-    }
+    capacities[i].disabled = false;
+  }
 
   if (roomsCount === MAX_ROOMS_COUNT) {
     for (let i = 0; i < capacities.length -1; i++) {
@@ -133,24 +143,30 @@ const formReset = () => {
   setAddressValue(TOKIO_COORDINATES_CENTER.lat, TOKIO_COORDINATES_CENTER.lng);
 }
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  const formData = new FormData(evt.target);
+const setFormSubmit = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const formData = new FormData(evt.target);
 
-  fetch (
-    'https://22.javascript.pages.academy/keksobooking',
-    {
-      method: 'POST',
-      body: formData,
-    },
-  );
-  formReset();
-});
+    fetch (
+      'https://22.javascript.pages.academy/keksobooking',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+      .then((response) => {
+        if (response.ok) {
+          formReset();
+          showPopup(successPopup);
+        } else {
+          showPopup(errorPopup);
+        }
 
-const formSubmit = (onSuccess) => {
-
+      })
+      .catch(() => showPopup(errorPopup));
+  });
 }
-
 
 buttonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
@@ -169,5 +185,7 @@ export {
   formElements,
   setAddressValue,
   disableFormElements,
-  enableFormElements
+  enableFormElements,
+  setFormSubmit,
+  buttonSubmit
 }
