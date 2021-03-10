@@ -1,7 +1,4 @@
-import {
-  createAdvertismentArray,
-  QUANTITY_ADVERTISMENT
-} from './data.js';
+import {} from './popup.js';
 import './ads.js';
 import {
   map,
@@ -11,12 +8,29 @@ import {
 import {
   form,
   formElements,
-  enableFormElements
+  enableFormElements,
+  setFormSubmit
 } from './form.js';
 import {
   filter,
   filterElements
 } from './filter.js'
+import {
+  showErrorPopup
+} from './util.js'
+
+fetch('https://22.javascript.pages.academy/keksobooking/data')
+  .then((response) => {
+    if(response.ok) {
+      return response.json();
+    } else {
+      showErrorPopup('Не удалось загрузить данные. Обновите страницу');
+    }
+  })
+  .then((advertisments) => {
+    createPopups(advertisments);
+  })
+  .catch(() => showErrorPopup('Не удалось загрузить данные. Обновите страницу'));
 
 map.
   on('load', () => {
@@ -28,5 +42,5 @@ map.
     lng: TOKIO_COORDINATES.lng,
   }, TOKIO_COORDINATES.scale);
 
-const ads = createAdvertismentArray(QUANTITY_ADVERTISMENT);
-createPopups(ads);
+
+setFormSubmit()

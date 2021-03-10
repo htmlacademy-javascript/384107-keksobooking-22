@@ -45,10 +45,14 @@ mainMarker.addTo(map);
 
 setAddressValue(TOKIO_COORDINATES_CENTER.lat, TOKIO_COORDINATES_CENTER.lng);
 
-mainMarker.on('moveend', (evt) => {
-  const coordinates = evt.target.getLatLng();
-  setAddressValue(coordinates.lat, coordinates.lng)
-});
+const setCoordinateValue = () => {
+  mainMarker.on('moveend', (evt) => {
+    const coordinates = evt.target.getLatLng();
+    setAddressValue(coordinates.lat, coordinates.lng)
+  });
+}
+
+setCoordinateValue()
 
 const createPopups = (ads) => {
   const icon = L.icon({
@@ -59,8 +63,8 @@ const createPopups = (ads) => {
 
   ads.forEach((element) => {
     const marker = L.marker({
-      lat: element.location.x,
-      lng: element.location.y,
+      lat: element.location.lat,
+      lng: element.location.lng,
     }, {
       icon,
     });
@@ -73,5 +77,8 @@ const createPopups = (ads) => {
 export {
   map,
   createPopups,
-  TOKIO_COORDINATES
+  TOKIO_COORDINATES,
+  mainMarker,
+  TOKIO_COORDINATES_CENTER,
+  setCoordinateValue
 };
